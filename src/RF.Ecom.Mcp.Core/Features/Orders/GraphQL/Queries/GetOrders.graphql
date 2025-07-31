@@ -1,0 +1,29 @@
+﻿query GetOrders($first: Int, $last: Int, $after: String, $before: String, $where: orderFilter) {
+  orders(
+    first: $first
+    last: $last
+    after: $after
+    before: $before
+    where: $where
+  ) {
+    totalCount
+    nodes {
+      id
+      reference
+      dateCreated
+      status
+      items {
+        id
+        description
+        price
+        dateCreated
+      }
+    }
+    pageInfo {
+      hasNextPage
+      hasPreviousPage
+      startCursor
+      endCursor
+    }
+  }
+}

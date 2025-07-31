@@ -1,0 +1,14 @@
+query GetOrder($id: UUID!) {
+  order(id: $id) {
+    id
+    status
+    reference
+    dateCreated
+    items {
+      id
+      description
+      price
+      dateCreated
+    }
+  }
+}

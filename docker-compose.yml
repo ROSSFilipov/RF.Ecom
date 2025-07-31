@@ -1,0 +1,80 @@
+name: ecom
+
+services:
+  ecom-orders-service:
+    image: ecom-orders-service:latest
+    container_name: ecom-orders-service
+    build:
+      context: .
+      dockerfile: .\src\RF.Ecom.Orders.Service\Dockerfile
+    ports:
+      - "8090:8080"
+      - "8091:8081"
+    environment:
+      - ConnectionStrings__Orders=Server=ecom-orders-database;Database=Orders;User=sa;Password=admin123!;TrustServerCertificate=True;
+      - DOTNET_ENVIRONMENT=Development
+      - OTEL_EXPORTER_OTLP_ENDPOINT=http://ecom-aspire-dashboard:18889
+      - OTEL_EXPORTER_OTLP_PROTOCOL=grpc
+      - OTEL_SERVICE_NAME=RF.Ecom.Orders.Service
+    depends_on:
+      ecom-orders-database:
+        condition: service_started
+      ecom-aspire-dashboard:
+        condition: service_started
+    networks:
+      - ecom-network
+  
+  ecom-mcp-http:
+    image: ecom-mcp-http:latest
+    container_name: ecom-mcp-http
+    build:
+      context: .
+      dockerfile: .\src\RF.Ecom.Mcp.Http\Dockerfile
+    ports:
+      - "8092:8080"
+    environment:
+      - OrdersServiceOptions__Url=http://ecom-orders-service:8080/graphql
+      - DOTNET_ENVIRONMENT=Development
+      - OTEL_EXPORTER_OTLP_ENDPOINT=http://ecom-aspire-dashboard:18889
+      - OTEL_EXPORTER_OTLP_PROTOCOL=grpc
+      - OTEL_SERVICE_NAME=RF.Ecom.Mcp.Http
+    depends_on:
+      ecom-orders-service:
+        condition: service_started
+      ecom-aspire-dashboard:
+        condition: service_started
+    networks:
+      - ecom-network
+
+  ecom-aspire-dashboard:
+    image: mcr.microsoft.com/dotnet/aspire-dashboard:latest
+    container_name: ecom-aspire-dashboard
+    ports:
+      - "18888:18888"
+    #  - "18889:18889"
+    environment:
+      - ASPIRE_DASHBOARD_UNSECURED_ALLOW_ANONYMOUS=true
+    networks:
+      - ecom-network
+
+  ecom-orders-database:
+    image: mcr.microsoft.com/mssql/server:2022-latest
+    user: root
+    container_name: ecom-orders-database
+    environment:
+      - ACCEPT_EULA=Y
+      - SA_PASSWORD=admin123!
+      - MSSQL_PID=Express
+    ports:
+      - "1433:1433"
+    volumes:
+      - ecom-orders-database-data:/var/opt/mssql/data
+    networks:
+      - ecom-network
+
+volumes:
+  ecom-orders-database-data:
+
+networks:
+  ecom-network:
+    driver: bridge

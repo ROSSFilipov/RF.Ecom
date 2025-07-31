@@ -1,0 +1,25 @@
+using HotChocolate.Diagnostics;
+using RF.Ecom.Core.Features.Orders.Infrastructure;
+using RF.Ecom.Orders.Service.Types;
+
+var builder = WebApplication.CreateBuilder(args);
+
+builder.AddServiceDefaults();
+builder.Services.AddOrderFeatures(builder.Configuration);
+builder.AddGraphQL()
+    .ModifyOptions(options => options.DefaultBindingBehavior = BindingBehavior.Explicit)
+    .ModifyRequestOptions(options => options.IncludeExceptionDetails = builder.Environment.IsDevelopment())
+    .AddType<QueryType>()
+    .AddProjections()
+    .AddFiltering()
+    .AddInstrumentation(options => options.Scopes = builder.Environment.IsDevelopment() ? ActivityScopes.All : ActivityScopes.Default);
+
+var app = builder.Build();
+
+app.MapDefaultEndpoints();
+
+app.MapGraphQL();
+
+app.UseHttpsRedirection();
+
+app.Run();

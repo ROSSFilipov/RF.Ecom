@@ -1,0 +1,21 @@
+{
+  "schema": "schema.graphql",
+  "documents": "**/*.graphql",
+  "extensions": {
+    "strawberryShake": {
+      "name": "OrdersClient",
+      "namespace": "RF.Ecom.Mcp.Core.Features.Orders",
+      "url": "http://localhost:8090/graphql/",
+      "records": {
+        "inputs": false,
+        "entities": false
+      },
+      "transportProfiles": [
+        {
+          "default": "Http",
+          "subscription": "WebSocket"
+        }
+      ]
+    }
+  }
+}
