@@ -33,7 +33,7 @@ services:
     ports:
       - "8092:8080"
     environment:
-      - OrdersServiceOptions__Url=http://ecom-orders-service:8080/graphql
+      - OrdersService__Url=http://ecom-orders-service:8080/graphql
       - DOTNET_ENVIRONMENT=Development
       - OTEL_EXPORTER_OTLP_ENDPOINT=http://ecom-aspire-dashboard:18889
       - OTEL_EXPORTER_OTLP_PROTOCOL=grpc
@@ -51,7 +51,6 @@ services:
     container_name: ecom-aspire-dashboard
     ports:
       - "18888:18888"
-    #  - "18889:18889"
     environment:
       - ASPIRE_DASHBOARD_UNSECURED_ALLOW_ANONYMOUS=true
     networks:

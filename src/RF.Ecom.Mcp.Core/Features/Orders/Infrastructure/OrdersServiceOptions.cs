@@ -2,7 +2,7 @@
 
 internal sealed class OrdersServiceOptions
 {
-    public const string SectionName = "OrdersServiceOptions";
+    public const string SectionName = "OrdersService";
 
     public string Url { get; init; }
 }
