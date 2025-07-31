@@ -10,9 +10,9 @@ public static class OrdersTools
 {
     private const int MaxOrdersCount = 5;
 
-    [McpServerTool]
+    [McpServerTool(Name = "get_order", Title = "Returns information about an order based on a provided id.")]
     [Description(@"
-    Allows the user to retrieve information about an order by passing an id. The user should be aware of the following considerations:
+    Allows the user to retrieve information about an order by providing an id. The user should be aware of the following considerations:
     - The order id must be a valid uuid.
     - The status of the order is represented by its numeric value. The list of all available statuses can be retrieved if the user wants to get more information.")]
     public static async Task<string> GetOrderAsync(
@@ -41,38 +41,7 @@ public static class OrdersTools
 		}
     }
 
-    [McpServerTool]
-    [Description(@"
-    Allows the user to get a list of all available order statuses. This tool can be used in the following scenarios:
-    - To retrieve the list of all available order statuses
-    - In case the user wants to get more information about. specific status and the list of statuses is not available.
-    - In case the user encounters an unkown status.")]
-    public static async Task<string> GetOrderStatusesAsync(
-        IOrdersClient client,
-        CancellationToken cancellationToken)
-    {
-        try
-        {
-            var result = await client.GetOrderStatuses.ExecuteAsync(cancellationToken);
-            if (result.Errors.Any())
-            {
-                return string.Join(", ", result.Errors.Select(e => e.Message));
-            }
-
-            if (result.Data.OrderStatuses != null)
-            {
-                return JsonSerializer.Serialize(result.Data.OrderStatuses);
-            }
-
-            return "Order not found.";
-        }
-        catch (Exception ex)
-        {
-            return ex.ToString();
-        }
-    }
-
-    [McpServerTool]
+    [McpServerTool(Name = "get_orders", Title = "Returns information about mutiple orders.")]
     [Description(@"
     Allows the user to retrieve a list of orders. The tool can be used when the user wants to get information about multiple orders.
     The user is currently allowed to filter orders only by status. The response consist of:

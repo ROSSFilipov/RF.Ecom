@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore;
 using RF.Ecom.Core;
 using RF.Ecom.Core.Features.Orders.Entities;
 
-public sealed class OrdersDbContext : DbContext
+internal sealed class OrdersDbContext : DbContext
 {
     public OrdersDbContext(DbContextOptions<OrdersDbContext> options) : base(options) { }
 

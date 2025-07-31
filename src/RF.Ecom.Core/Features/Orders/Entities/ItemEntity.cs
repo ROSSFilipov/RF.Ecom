@@ -1,6 +1,6 @@
 ﻿namespace RF.Ecom.Core.Features.Orders.Entities;
 
-public sealed class ItemEntity
+internal sealed class ItemEntity
 {
     public int Id { get; set; }
 

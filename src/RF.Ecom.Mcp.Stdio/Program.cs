@@ -11,7 +11,8 @@ builder.Services.AddOrdersInfrastructure(builder.Configuration);
 
 builder.Services.AddMcpServer()
     .WithStdioServerTransport()
-    .WithToolsFromAssembly(typeof(RF.Ecom.Mcp.Core.AssemblyMark).Assembly);
+    .WithToolsFromAssembly(typeof(RF.Ecom.Mcp.Core.AssemblyMark).Assembly)
+    .WithPromptsFromAssembly(typeof(RF.Ecom.Mcp.Core.AssemblyMark).Assembly);
 
 var app = builder.Build();
 

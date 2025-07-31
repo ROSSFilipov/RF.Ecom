@@ -5,6 +5,7 @@ using RF.Ecom.Orders.Service.Types;
 var builder = WebApplication.CreateBuilder(args);
 
 builder.AddServiceDefaults();
+builder.Services.AddProblemDetails();
 builder.Services.AddOrderFeatures(builder.Configuration);
 builder.AddGraphQL()
     .ModifyOptions(options => options.DefaultBindingBehavior = BindingBehavior.Explicit)
