@@ -1,8 +1,10 @@
+using RF.Ecom.Infrastructure;
 using RF.Ecom.Mcp.Core.Features.Orders.Infrastructure;
 
 var builder = WebApplication.CreateBuilder(args);
 builder.AddServiceDefaults();
-builder.Services.AddProblemDetails();
+builder.Services.AddCustomProblemDetails();
+builder.Services.AddExceptionHandler<ProblemDetailsExceptionHandler>();
 builder.Services.AddOrdersInfrastructure(builder.Configuration);
 builder.Services.AddMcpServer()
     .WithHttpTransport()
