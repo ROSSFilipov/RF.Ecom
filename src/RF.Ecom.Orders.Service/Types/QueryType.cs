@@ -28,5 +28,22 @@ internal sealed class QueryType : ObjectType<Query>
             .Name("orderStatuses")
             .Type<ListType<NonNullType<OrderStatusModelType>>>()
             .Description("Retrieves a list of all possible order statuses.");
+
+        descriptor
+            .Field(x => x.GetOrderAsync(default, default, default, default))
+            .Name("orderModel")
+            .Type<OrderModelType>()
+            .Description("Retrieves an order by its unique identifier.")
+            .UseProjection()
+            .UseFirstOrDefault();
+
+        descriptor
+            .Field(x => x.GetOrdersAsync(default, default, default, default))
+            .Name("orderModels")
+            .Type<ListType<OrderModelType>>()
+            .Description("Retrieves a list of orders")
+            .UsePaging()
+            .UseProjection()
+            .UseFiltering();
     }
 }
