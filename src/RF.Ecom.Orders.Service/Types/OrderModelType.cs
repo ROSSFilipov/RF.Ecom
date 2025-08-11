@@ -37,6 +37,6 @@ public sealed class OrderModelType : ObjectType<OrderModel>
             .Name("items")
             .Type<ListType<ItemModelType>>()
             .Description("The list of items in the order.")
-            .UseProjection();
+            .ResolveWith<ItemResolver>(x => x.GetItemsAsync(default, default, default));
     }
 }

@@ -17,10 +17,18 @@
 
         public IEnumerable<OrderStatus> GetOrderStatuses() => OrderStatus.List;
 
-        public async Task<OrderModel> GetOrderAsync(Guid id, QueryContext<OrderModel> queryContext, IOrderService orderService, CancellationToken cancellationToken)
+        public async Task<OrderModel> GetOrderAsync(
+            Guid id, 
+            QueryContext<OrderModel> queryContext, 
+            IOrderService orderService, 
+            CancellationToken cancellationToken)
             => await orderService.GetOrderAsync(id, queryContext, cancellationToken);
 
-        public async Task<Connection<OrderModel>> GetOrdersAsync(PagingArguments pagingArguments, QueryContext<OrderModel> queryContext, IOrderService orderService, CancellationToken cancellationToken)
+        public async Task<Connection<OrderModel>> GetOrdersAsync(
+            PagingArguments pagingArguments, 
+            QueryContext<OrderModel> queryContext, 
+            IOrderService orderService, 
+            CancellationToken cancellationToken)
             => await orderService.GetOrdersAsync(pagingArguments, queryContext, cancellationToken).ToConnectionAsync();
     }
 }

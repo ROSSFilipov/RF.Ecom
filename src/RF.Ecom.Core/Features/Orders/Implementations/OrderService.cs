@@ -35,9 +35,4 @@ internal sealed class OrderService : IOrderService
             .OrderBy(x => x.Id)
             .ToPageAsync(pagingArguments, cancellationToken);
     }
-
-    //public async Task<Page<ItemModel>> GetItemsByOrderAsync(int id, PagingArguments pagingArguments, CancellationToken cancellationToken)
-    //{
-    //    return await itemsDataLoader.GetItemsByOrderIdAsync.With
-    //}
 }

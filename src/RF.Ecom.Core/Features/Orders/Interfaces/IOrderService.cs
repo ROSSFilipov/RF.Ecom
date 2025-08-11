@@ -3,7 +3,7 @@
 using GreenDonut.Data;
 using RF.Ecom.Core.Features.Orders.Models;
 
-internal interface IOrderService
+public interface IOrderService
 {
     Task<OrderModel> GetOrderAsync(Guid id, QueryContext<OrderModel> queryContext, CancellationToken cancellationToken);
 
