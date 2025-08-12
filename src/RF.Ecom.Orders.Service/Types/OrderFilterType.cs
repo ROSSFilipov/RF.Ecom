@@ -1,11 +1,11 @@
 ﻿namespace RF.Ecom.Orders.Service.Types;
 
 using HotChocolate.Data.Filters;
-using RF.Ecom.Core.Features.Orders.Entities;
+using RF.Ecom.Core.Features.Orders.Models;
 
-internal sealed class OrderFilterType : FilterInputType<OrderEntity>
+internal sealed class OrderFilterType : FilterInputType<OrderModel>
 {
-    protected override void Configure(IFilterInputTypeDescriptor<OrderEntity> descriptor)
+    protected override void Configure(IFilterInputTypeDescriptor<OrderModel> descriptor)
     {
         descriptor.Name("orderFilter");
 

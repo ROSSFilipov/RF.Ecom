@@ -6,7 +6,7 @@ public sealed class OrderModelType : ObjectType<OrderModel>
 {
     protected override void Configure(IObjectTypeDescriptor<OrderModel> descriptor)
     {
-        descriptor.Name("orderModel");
+        descriptor.Name("order");
 
         descriptor
             .Field(x => x.DomainId)
@@ -37,6 +37,8 @@ public sealed class OrderModelType : ObjectType<OrderModel>
             .Name("items")
             .Type<ListType<ItemModelType>>()
             .Description("The list of items in the order.")
-            .ResolveWith<Query>(x => x.GetItemsAsync(default, default, default));
+            .ResolveWith<Query>(x => x.GetItemsAsync(default, default, default, default, default))
+            .UsePaging()
+            .UseProjection();
     }
 }

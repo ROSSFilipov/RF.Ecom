@@ -1,28 +1,9 @@
 ﻿namespace RF.Ecom.Orders.Service.Types;
 
-using HotChocolate.Types.Pagination;
-
 internal sealed class QueryType : ObjectType<Query>
 {
     protected override void Configure(IObjectTypeDescriptor<Query> descriptor)
     {
-        descriptor
-            .Field(x => x.GetOrder(default, default))
-            .Name("order")
-            .Type<OrderType>()
-            .Description("Retrieves an order by its unique identifier.")
-            .UseFirstOrDefault()
-            .UseProjection();
-
-        descriptor
-            .Field(x => x.GetOrders(default))
-            .Name("orders")
-            .Type<ListType<NonNullType<OrderType>>>()
-            .Description("Retrieves a list of orders.")
-            .UsePaging(options: new PagingOptions() { DefaultPageSize = 10, MaxPageSize = 25, IncludeTotalCount = true })
-            .UseProjection()
-            .UseFiltering<OrderFilterType>();
-
         descriptor
             .Field(x => x.GetOrderStatuses())
             .Name("orderStatuses")
@@ -31,7 +12,7 @@ internal sealed class QueryType : ObjectType<Query>
 
         descriptor
             .Field(x => x.GetOrderAsync(default, default, default, default))
-            .Name("orderModel")
+            .Name("order")
             .Type<OrderModelType>()
             .Description("Retrieves an order by its unique identifier.")
             .UseProjection()
@@ -39,9 +20,9 @@ internal sealed class QueryType : ObjectType<Query>
 
         descriptor
             .Field(x => x.GetOrdersAsync(default, default, default, default))
-            .Name("orderModels")
+            .Name("orders")
             .Type<ListType<OrderModelType>>()
-            .Description("Retrieves a list of orders")
+            .Description("Retrieves a list of orders.")
             .UsePaging()
             .UseProjection()
             .UseFiltering();

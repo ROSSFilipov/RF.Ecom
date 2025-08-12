@@ -6,7 +6,7 @@ public class ItemModelType : ObjectType<ItemModel>
 {
     protected override void Configure(IObjectTypeDescriptor<ItemModel> descriptor)
     {
-        descriptor.Name("itemModel");
+        descriptor.Name("item");
 
         descriptor
             .Field(x => x.DomainId)
