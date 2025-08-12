@@ -23,6 +23,8 @@ public static class ServiceCollectionExtensions
         });
 
         services.AddTransient<IOrderService, OrderService>();
+        services.AddTransient<IItemService, ItemService>();
+        services.AddItemsDataLoader();
         return services;
     }
 }
