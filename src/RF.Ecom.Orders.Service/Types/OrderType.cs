@@ -1,8 +1,9 @@
 ﻿namespace RF.Ecom.Orders.Service.Types;
 
+using HotChocolate.Types.Pagination;
 using RF.Ecom.Core.Features.Orders.Models;
 
-public sealed class OrderModelType : ObjectType<OrderModel>
+public sealed class OrderType : ObjectType<OrderModel>
 {
     protected override void Configure(IObjectTypeDescriptor<OrderModel> descriptor)
     {
@@ -35,10 +36,10 @@ public sealed class OrderModelType : ObjectType<OrderModel>
         descriptor
             .Field(x => x.Items)
             .Name("items")
-            .Type<ListType<ItemModelType>>()
+            .Type<ListType<ItemType>>()
             .Description("The list of items in the order.")
             .ResolveWith<Query>(x => x.GetItemsAsync(default, default, default, default, default))
-            .UsePaging()
+            .UsePaging(options: new PagingOptions() { IncludeTotalCount = true })
             .UseProjection();
     }
 }

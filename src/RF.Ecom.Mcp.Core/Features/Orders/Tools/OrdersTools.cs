@@ -8,7 +8,7 @@ using System.Text.Json;
 [McpServerToolType]
 public static class OrdersTools
 {
-    private const int MaxOrdersCount = 5;
+    private const int MaxOrdersCount = 10;
 
     [McpServerTool(Name = "get_order", Title = "Returns information about an order based on a provided id.")]
     [Description(@"
@@ -52,10 +52,10 @@ public static class OrdersTools
         IOrdersClient client,
         [Description(@"The parameter is optional and allows the user to select how many orders should be requested starting from the first in the list. The user should be aware of the following considerations:
         - Only positive numbers are allowed
-        - The number cannot exceed the allowed maximum of 5 orders at a time.")] int? first = null,
+        - The number cannot exceed the allowed maximum of 10 orders at a time. Returns 5 orders if not specified.")] int? first = null,
         [Description(@"The parameter is optional and allows the user to select how many orders should be requested starting from the last in the list. The user should be aware of the following considerations:
         - Only positive numbers are allowed
-        - The number cannot exceed the allowed maximum of 5 orders at a time.")] int? last = null,
+        - The number cannot exceed the allowed maximum of 10 orders at a time. Returns 5 orders if not specified.")] int? last = null,
         [Description("The parameter is optional and can be used to retrieve the next page of orders in case the response paging info hasNextPage property has a value of true.")] string after = null,
         [Description("The parameter is optional can be used to retrieve the previous page of orders in case the response paging info hasPreviousPage property has a value of true.")] string before = null,
         [Description("The parameter is optional can be used to filter orders by status.")] int? status = null,
@@ -75,13 +75,13 @@ public static class OrdersTools
                 };
             }
 
-            var firstParameter = MaxOrdersCount;
+            int? firstParameter = null;
             if (first.HasValue)
             {
                 firstParameter = Math.Min(first.Value, MaxOrdersCount);
             }
 
-            var lastParameter = MaxOrdersCount;
+            int? lastParameter = null;
             if (last.HasValue)
             {
                 lastParameter = Math.Min(last.Value, MaxOrdersCount);

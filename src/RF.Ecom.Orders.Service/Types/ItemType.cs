@@ -2,7 +2,7 @@
 
 using RF.Ecom.Core.Features.Orders.Models;
 
-public class ItemModelType : ObjectType<ItemModel>
+public class ItemType : ObjectType<ItemModel>
 {
     protected override void Configure(IObjectTypeDescriptor<ItemModel> descriptor)
     {

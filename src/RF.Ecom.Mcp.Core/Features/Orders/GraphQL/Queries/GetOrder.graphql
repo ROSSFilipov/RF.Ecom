@@ -5,10 +5,13 @@ query GetOrder($id: UUID!) {
     reference
     dateCreated
     items {
-      id
-      description
-      price
-      dateCreated
+      totalCount
+      nodes {
+        id
+        description
+        price
+        dateCreated
+      }
     }
   }
 }

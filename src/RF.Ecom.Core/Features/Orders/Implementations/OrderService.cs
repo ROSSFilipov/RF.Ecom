@@ -23,7 +23,7 @@ internal sealed class OrderService : IOrderService
         return await context.Orders
             .Where(x => x.DomainId == id)
             .MapToOrderModel()
-            .With(queryContext)
+            //.With(queryContext)
             .FirstOrDefaultAsync(cancellationToken);
     }
 

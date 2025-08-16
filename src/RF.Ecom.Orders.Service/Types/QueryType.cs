@@ -1,4 +1,6 @@
-﻿namespace RF.Ecom.Orders.Service.Types;
+﻿using HotChocolate.Types.Pagination;
+
+namespace RF.Ecom.Orders.Service.Types;
 
 internal sealed class QueryType : ObjectType<Query>
 {
@@ -13,7 +15,7 @@ internal sealed class QueryType : ObjectType<Query>
         descriptor
             .Field(x => x.GetOrderAsync(default, default, default, default))
             .Name("order")
-            .Type<OrderModelType>()
+            .Type<OrderType>()
             .Description("Retrieves an order by its unique identifier.")
             .UseProjection()
             .UseFirstOrDefault();
@@ -21,10 +23,10 @@ internal sealed class QueryType : ObjectType<Query>
         descriptor
             .Field(x => x.GetOrdersAsync(default, default, default, default))
             .Name("orders")
-            .Type<ListType<OrderModelType>>()
+            .Type<ListType<OrderType>>()
             .Description("Retrieves a list of orders.")
-            .UsePaging()
+            .UsePaging(options: new PagingOptions() { IncludeTotalCount = true, DefaultPageSize = 5, MaxPageSize = 10 })
             .UseProjection()
-            .UseFiltering();
+            .UseFiltering<OrderFilterType>();
     }
 }
