@@ -1,5 +1,5 @@
 # Ecom MCP server
-This project demonstrates a [model context protocol](https://modelcontextprotocol.io/overview) server implementation which is integrated a GraphQL server.
+This project demonstrates a [model context protocol](https://modelcontextprotocol.io/overview) server implementation which is integrated with a GraphQL server.
 
 While following development and architectural best practices is always recommended this project is not purposed to teach some of the modern and popular concepts such as domain driven design or layered architecture to name a few (though some elements of the mentioned concepts can still be found).
 
