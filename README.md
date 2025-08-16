@@ -1,7 +1,7 @@
 # Ecom MCP server
-This project demonstrates a [model context protocol](https://modelcontextprotocol.io/overview) server implementation which is integrated with various sources to retrieve data such as a GraphQL server and a REST API (more can be added in future).
+This project demonstrates a [model context protocol](https://modelcontextprotocol.io/overview) server implementation which is integrated with a GraphQL server.
 
-While following development and architectural best practices is always recommended this project is not purposed to teach some of the modern and popular concepts such as domain driven design or clean architecture to name a few (though some elements of the mentioned concepts can still be found).
+While following development and architectural best practices is always recommended this project is not purposed to teach some of the modern and popular concepts such as domain driven design or layered architecture to name a few (though some elements of the mentioned concepts can still be found).
 
 ## Structure
 The solution consists of the following projects:
@@ -74,7 +74,7 @@ In `VS Code` you can open the Copilot chat and switch to `agent` mode then a sma
 Here are some of the prompts that you can use to test the MCP server:
 
 **Prompt**:
-> I need information about order with id e2a1c1d1-0001-0000-0000-000000000016
+> I need information about order with id e2a1c1d1-0001-0000-0000-000000000016.
 
 **Response**:
 
@@ -91,7 +91,7 @@ If you need more details about the status or items, let me know!
 
 **Prompt**:
 
-> I need more information about order statuses
+> I need more information about order statuses.
 
 **Response**:
 
@@ -108,3 +108,11 @@ If you need more details about the status or items, let me know!
 > -   9: Returned – The order has been returned.
 > 
 > Let me know if you need details about a specific status.
+
+**Prompt**:
+
+> How many failed orders do we have in total ?
+
+**Response**:
+
+> There are a total of 12 failed orders in the system. If you need details about these orders or want to see more, just let me know!

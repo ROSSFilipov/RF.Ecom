@@ -13,10 +13,13 @@
       dateCreated
       status
       items {
-        id
-        description
-        price
-        dateCreated
+        totalCount
+        nodes {
+          id
+          description
+          price
+          dateCreated
+        }
       }
     }
     pageInfo {

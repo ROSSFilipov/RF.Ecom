@@ -1,10 +1,11 @@
 ﻿namespace RF.Ecom.Orders.Service.Types;
 
-using RF.Ecom.Core.Features.Orders.Entities;
+using HotChocolate.Types.Pagination;
+using RF.Ecom.Core.Features.Orders.Models;
 
-internal sealed class OrderType : ObjectType<OrderEntity>
+public sealed class OrderType : ObjectType<OrderModel>
 {
-    protected override void Configure(IObjectTypeDescriptor<OrderEntity> descriptor)
+    protected override void Configure(IObjectTypeDescriptor<OrderModel> descriptor)
     {
         descriptor.Name("order");
 
@@ -36,6 +37,9 @@ internal sealed class OrderType : ObjectType<OrderEntity>
             .Field(x => x.Items)
             .Name("items")
             .Type<ListType<ItemType>>()
-            .Description("The list of items in the order.");
+            .Description("The list of items in the order.")
+            .ResolveWith<Query>(x => x.GetItemsAsync(default, default, default, default, default))
+            .UsePaging(options: new PagingOptions() { IncludeTotalCount = true })
+            .UseProjection();
     }
 }

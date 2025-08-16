@@ -4,11 +4,13 @@ using Microsoft.EntityFrameworkCore;
 using RF.Ecom.Core;
 using RF.Ecom.Core.Features.Orders.Entities;
 
-internal sealed class OrdersDbContext : DbContext
+internal sealed class OrdersContext : DbContext
 {
-    public OrdersDbContext(DbContextOptions<OrdersDbContext> options) : base(options) { }
+    public OrdersContext(DbContextOptions<OrdersContext> options) : base(options) { }
 
     public DbSet<OrderEntity> Orders { get; set; }
+
+    public DbSet<ItemEntity> Items { get; set; }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {

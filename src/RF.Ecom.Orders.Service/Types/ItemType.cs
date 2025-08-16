@@ -1,10 +1,10 @@
 ﻿namespace RF.Ecom.Orders.Service.Types;
 
-using RF.Ecom.Core.Features.Orders.Entities;
+using RF.Ecom.Core.Features.Orders.Models;
 
-internal sealed class ItemType : ObjectType<ItemEntity>
+public class ItemType : ObjectType<ItemModel>
 {
-    protected override void Configure(IObjectTypeDescriptor<ItemEntity> descriptor)
+    protected override void Configure(IObjectTypeDescriptor<ItemModel> descriptor)
     {
         descriptor.Name("item");
 

@@ -14,6 +14,8 @@ builder.AddGraphQL()
     .ModifyRequestOptions(options => options.IncludeExceptionDetails = builder.Environment.IsDevelopment())
     .AddType<QueryType>()
     .AddProjections()
+    .AddPagingArguments()
+    .AddQueryContext()
     .AddFiltering()
     .AddInstrumentation(options => options.Scopes = builder.Environment.IsDevelopment() ? ActivityScopes.All : ActivityScopes.Default);
 

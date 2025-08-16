@@ -1,3 +1,3 @@
 ﻿namespace RF.Ecom.Core;
 
-internal class AssemblyMark { }
+public sealed class AssemblyMark { }

@@ -1,16 +1,34 @@
-﻿namespace RF.Ecom.Orders.Service.Types
+﻿namespace RF.Ecom.Orders.Service.Types;
+
+using GreenDonut.Data;
+using HotChocolate.Types.Pagination;
+using RF.Ecom.Core.Features.Orders.Enumerations;
+using RF.Ecom.Core.Features.Orders.Interfaces;
+using RF.Ecom.Core.Features.Orders.Models;
+
+internal class Query
 {
-    using Microsoft.EntityFrameworkCore;
-    using RF.Ecom.Core.Features.Orders.Entities;
-    using RF.Ecom.Core.Features.Orders.Enumerations;
-    using RF.Ecom.Core.Features.Orders.Infrastructure;
+    public IEnumerable<OrderStatus> GetOrderStatuses() => OrderStatus.List;
 
-    internal class Query
-    {
-        public IQueryable<OrderEntity> GetOrder(Guid id, [Service] OrdersDbContext context) => context.Orders.AsNoTracking().OrderBy(x => x.Id).Where(x => x.DomainId == id);
+    public async Task<OrderModel> GetOrderAsync(
+        Guid id,
+        QueryContext<OrderModel> queryContext,
+        IOrderService orderService,
+        CancellationToken cancellationToken)
+        => await orderService.GetOrderAsync(id, queryContext, cancellationToken);
 
-        public IQueryable<OrderEntity> GetOrders([Service] OrdersDbContext context) => context.Orders.AsNoTracking().OrderBy(x => x.Id);
+    public async Task<Connection<OrderModel>> GetOrdersAsync(
+        PagingArguments pagingArguments,
+        QueryContext<OrderModel> queryContext,
+        IOrderService orderService,
+        CancellationToken cancellationToken)
+        => await orderService.GetOrdersAsync(pagingArguments, queryContext, cancellationToken).ToConnectionAsync();
 
-        public IEnumerable<OrderStatus> GetOrderStatuses() => OrderStatus.List;
-    }
+    public async Task<Connection<ItemModel>> GetItemsAsync(
+        [Parent] OrderModel order,
+        PagingArguments pagingArguments,
+        QueryContext<ItemModel> queryContext,
+        IItemService itemService,
+        CancellationToken cancellationToken)
+        => await itemService.GetItemsByOrderIdAsync(order.Id, pagingArguments, queryContext, cancellationToken).ToConnectionAsync();
 }

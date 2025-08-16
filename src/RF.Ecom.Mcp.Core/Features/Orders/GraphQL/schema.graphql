@@ -3,12 +3,12 @@ schema {
 }
 
 type Query {
+  "Retrieves a list of all possible order statuses."
+  orderStatuses: [orderStatus!]
   "Retrieves an order by its unique identifier."
   order(id: UUID!): order
   "Retrieves a list of orders."
   orders("Returns the first _n_ elements from the list." first: Int "Returns the elements in the list that come after the specified cursor." after: String "Returns the last _n_ elements from the list." last: Int "Returns the elements in the list that come before the specified cursor." before: String where: orderFilter): OrdersConnection
-  "Retrieves a list of all possible order statuses."
-  orderStatuses: [orderStatus!]
 }
 
 input orderFilter {
@@ -18,18 +18,6 @@ input orderFilter {
   status: OrderStatusFilterInput
 }
 
-"A connection to a list of items."
-type OrdersConnection {
-  "Information to aid in pagination."
-  pageInfo: PageInfo!
-  "A list of edges."
-  edges: [OrdersEdge!]
-  "A flattened list of the nodes."
-  nodes: [order!]
-  "Identifies the total count of items in the connection."
-  totalCount: Int!
-}
-
 type orderStatus {
   "The unique identifier of the order status."
   id: ID!
@@ -37,6 +25,18 @@ type orderStatus {
   name: String!
   "A description of the order status."
   description: String!
+}
+
+"A connection to a list of items."
+type OrdersConnection {
+  "Information to aid in pagination."
+  pageInfo: PageInfo!
+  "A list of edges."
+  edges: [OrdersEdge!]
+  "A flattened list of the nodes."
+  nodes: [order]
+  "Identifies the total count of items in the connection."
+  totalCount: Int!
 }
 
 input OrderStatusFilterInput {
@@ -68,7 +68,7 @@ type order {
   "The date and time when the order was created."
   dateCreated: DateTime!
   "The list of items in the order."
-  items: [item]
+  items("Returns the first _n_ elements from the list." first: Int "Returns the elements in the list that come after the specified cursor." after: String "Returns the last _n_ elements from the list." last: Int "Returns the elements in the list that come before the specified cursor." before: String): ItemsConnection
 }
 
 "An edge in a connection."
@@ -76,11 +76,23 @@ type OrdersEdge {
   "A cursor for use in pagination."
   cursor: String!
   "The item at the end of the edge."
-  node: order!
+  node: order
 }
 
 "The `DateTime` scalar represents an ISO-8601 compliant date time type."
 scalar DateTime
+
+"A connection to a list of items."
+type ItemsConnection {
+  "Information to aid in pagination."
+  pageInfo: PageInfo!
+  "A list of edges."
+  edges: [ItemsEdge!]
+  "A flattened list of the nodes."
+  nodes: [item]
+  "Identifies the total count of items in the connection."
+  totalCount: Int!
+}
 
 type item {
   "The unique identifier of the item."
@@ -91,6 +103,14 @@ type item {
   price: Decimal!
   "The date and time when the item was created."
   dateCreated: DateTime!
+}
+
+"An edge in a connection."
+type ItemsEdge {
+  "A cursor for use in pagination."
+  cursor: String!
+  "The item at the end of the edge."
+  node: item
 }
 
 "The `Decimal` scalar type represents a decimal floating-point number."
